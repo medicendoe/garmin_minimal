@@ -22,7 +22,7 @@ class BatteryLayer extends Layer {
         _centerX = centerX;
         _centerY = centerY;
         _radius = radius;
-        _batteryPercentage = 100;
+        _batteryPercentage = 100.0f;
         update();
     }
 

@@ -8,7 +8,7 @@ import Toybox.Lang;
  */
 class DateLayer extends Layer {
     private var _dateView as Text;
-    private var _dateString as String;
+    private var _dateString as String?;
 
     /**
      * Initializes the date layer.

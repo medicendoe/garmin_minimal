@@ -9,8 +9,8 @@ import Toybox.WatchUi;
 class DayMonthLayer extends Layer {
     private var _dayView as Text;
     private var _monthView as Text;
-    private var _dayString as String;
-    private var _monthString as String;
+    private var _dayString as String?;
+    private var _monthString as String?;
 
     /**
      * Initializes the day and month layer.
