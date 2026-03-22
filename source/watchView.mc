@@ -37,7 +37,8 @@ class watchView extends WatchUi.WatchFace {
     }
 
     function onUpdate(dc as Dc) as Void {
-        _batteryColor = _computeBatteryColor();
+        var battery = System.getSystemStats().battery;
+        _batteryColor = _computeBatteryColor(battery);
         var color = _batteryColor;
         var clockTime = System.getClockTime();
         var bl = _batteryLayer;
@@ -46,7 +47,7 @@ class watchView extends WatchUi.WatchFace {
         var dl = _dateLayer;
         var dml = _dayMonthLayer;
 
-        if (bl != null) { bl.setColor(color); bl.update(); }
+        if (bl != null) { bl.setColor(color); bl.update(battery); }
         if (tl != null) { tl.setColor(color); tl.update(); tl.draw(dc); }
         if (sl != null) { sl.setColor(color); sl.update(); sl.draw(dc); }
 
@@ -86,8 +87,7 @@ class watchView extends WatchUi.WatchFace {
     function onEnterSleep() as Void {
     }
 
-    private function _computeBatteryColor() as Number {
-        var battery = System.getSystemStats().battery;
+    private function _computeBatteryColor(battery as Float) as Number {
         var normalColor = Application.Properties.getValue("NormalColor") as Number;
         var alertColor = Application.Properties.getValue("AlertColor") as Number;
         return (battery <= 15) ? alertColor : normalColor;

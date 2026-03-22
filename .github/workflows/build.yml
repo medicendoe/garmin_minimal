@@ -23,10 +23,10 @@ jobs:
         run: echo "${{ secrets.DEVELOPER_KEY }}" | base64 -d > developer_key
 
       - name: Build PRG
-        run: monkeyc -y developer_key -o bin/Watch.prg -f monkey.jungle -d fr745
+        run: monkeyc -y developer_key -o bin/Watch.prg -f monkey.jungle -d fr745 -O 3
 
       - name: Build IQ
-        run: monkeyc -e -y developer_key -o bin/Watch.iq -f monkey.jungle
+        run: monkeyc -e -y developer_key -o bin/Watch.iq -f monkey.jungle -O 3
 
       - name: Upload PRG Artifact
         uses: actions/upload-artifact@v4

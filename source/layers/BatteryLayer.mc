@@ -1,6 +1,5 @@
 import Toybox.Graphics;
 import Toybox.Lang;
-import Toybox.System;
 
 class BatteryLayer {
     private var _centerX as Number;
@@ -15,15 +14,14 @@ class BatteryLayer {
         _radius = radius;
         _color = Graphics.COLOR_WHITE;
         _batteryPercentage = 100.0f;
-        update();
     }
 
     function setColor(color as Number) as Void {
         _color = color;
     }
 
-    function update() as Void {
-        _batteryPercentage = System.getSystemStats().battery;
+    function update(battery as Float) as Void {
+        _batteryPercentage = battery;
     }
 
     function draw(dc as Dc) as Void {
