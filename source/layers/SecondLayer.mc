@@ -1,6 +1,5 @@
 import Toybox.Graphics;
 import Toybox.System;
-import Toybox.WatchUi;
 import Toybox.Lang;
 
 /**
@@ -66,7 +65,4 @@ class SecondLayer extends Layer {
         dc.clearClip();
     }
 
-    function hasBurnInProtection() as Boolean {
-        return _hasBurnInProtection;
-    }
 }

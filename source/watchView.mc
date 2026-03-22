@@ -8,6 +8,8 @@ import Toybox.WatchUi;
  */
 class watchView extends WatchUi.WatchFace {
     private var _layerManager as LayerManager;
+    private var _batteryLayer as BatteryLayer?;
+    private var _timeLayer as TimeLayer?;
     private var _secondLayer as SecondLayer?;
 
     function initialize() {
@@ -25,8 +27,8 @@ class watchView extends WatchUi.WatchFace {
         var centerX = screenWidth / 2;
         var centerY = dc.getHeight() / 2;
 
-        var batteryLayer = new BatteryLayer(centerX, centerY, radius);
-        var timeLayer = new TimeLayer(View.findDrawableById("Time") as Text);
+        _batteryLayer = new BatteryLayer(centerX, centerY, radius);
+        _timeLayer = new TimeLayer(View.findDrawableById("Time") as Text);
         _secondLayer = new SecondLayer(View.findDrawableById("Second") as Text);
         var dateLayer = new DateLayer(View.findDrawableById("Date") as Text);
         var dayMonthLayer = new DayMonthLayer(
@@ -34,28 +36,45 @@ class watchView extends WatchUi.WatchFace {
             View.findDrawableById("Month") as Text
         );
 
-        _layerManager.addLayer("battery", batteryLayer);
-        _layerManager.addLayer("time", timeLayer);
+        _layerManager.addLayer("battery", _batteryLayer);
+        _layerManager.addLayer("time", _timeLayer);
         _layerManager.addLayer("second", _secondLayer);
         _layerManager.addLayer("date", dateLayer);
         _layerManager.addLayer("dayMonth", dayMonthLayer);
     }
 
     function onUpdate(dc as Dc) as Void {
-        View.onUpdate(dc);
         _layerManager.updateLayers();
         _layerManager.drawLayers(dc);
+        View.onUpdate(dc);
+        var batteryLayer = _batteryLayer;
+        if (batteryLayer != null) {
+            batteryLayer.draw(dc);
+        }
     }
 
     function onPartialUpdate(dc as Dc) as Void {
-        // At the minute boundary, request a full update so TimeLayer stays in sync
+        var color = _layerManager.getBatteryColor();
         if (System.getClockTime().sec == 0) {
+            // At minute rollover: immediately show "00" and updated minutes, then request full redraw
+            var secondLayer = _secondLayer;
+            if (secondLayer != null) {
+                secondLayer.setColor(color);
+                secondLayer.update();
+                secondLayer.drawPartial(dc);
+            }
+            var timeLayer = _timeLayer;
+            if (timeLayer != null) {
+                timeLayer.setColor(color);
+                timeLayer.update();
+                timeLayer.drawPartial(dc);
+            }
             WatchUi.requestUpdate();
             return;
         }
         var secondLayer = _secondLayer;
         if (secondLayer != null) {
-            secondLayer.setColor(_layerManager.getBatteryColor());
+            secondLayer.setColor(color);
             secondLayer.update();
             secondLayer.drawPartial(dc);
         }

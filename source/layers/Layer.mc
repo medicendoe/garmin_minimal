@@ -1,5 +1,4 @@
 import Toybox.Graphics;
-import Toybox.Lang;
 
 /**
  * Abstract base class for all visual layers.

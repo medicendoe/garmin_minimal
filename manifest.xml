@@ -26,7 +26,6 @@
         -->
         <iq:languages>
             <iq:language>eng</iq:language>
-            <iq:language>spa</iq:language>
         </iq:languages>
         <!--
             Use "Monkey C: Configure Monkey Barrel" from the Visual Studio Code
