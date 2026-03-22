@@ -3,26 +3,21 @@ import Toybox.Lang;
 import Toybox.System;
 import Toybox.WatchUi;
 
-/**
- * Layer to display the main time (hours and minutes).
- */
-class TimeLayer extends Layer {
+class TimeLayer {
     private var _timeView;
     private var _timeString;
+    private var _color as Number;
 
-    /**
-     * Initializes the time layer.
-     * @param view The text view to display the time
-     */
     function initialize(view as Text) {
-        Layer.initialize();
         _timeView = view;
+        _color = Graphics.COLOR_WHITE;
         update();
     }
 
-    /**
-     * Updates the time string.
-     */
+    function setColor(color as Number) as Void {
+        _color = color;
+    }
+
     function update() as Void {
         var clockTime = System.getClockTime();
         _timeString = Lang.format("$1$$2$", [
@@ -31,32 +26,15 @@ class TimeLayer extends Layer {
         ]);
     }
 
-    /**
-     * Draws the time string on the device context.
-     * @param dc The device context
-     */
     function draw(dc as Dc) as Void {
-        if (!_visible || _timeView == null) {
-            return;
-        }
-
         _timeView.setText(_timeString);
         _timeView.setColor(_color);
     }
 
-    /**
-     * Partial update: clips to the time region and redraws only HH:MM.
-     * @param dc The device context
-     */
     function drawPartial(dc as Dc) as Void {
-        if (_timeView == null) {
-            return;
-        }
         var locX = _timeView.locX;
         var locY = _timeView.locY;
-        var width = _timeView.width;
-        var height = _timeView.height;
-        dc.setClip(locX, locY, width, height);
+        dc.setClip(locX, locY, _timeView.width, _timeView.height);
         dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_BLACK);
         dc.clear();
         dc.setColor(_color, Graphics.COLOR_TRANSPARENT);

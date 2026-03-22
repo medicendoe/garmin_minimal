@@ -1,32 +1,26 @@
 import Toybox.Graphics;
+import Toybox.Lang;
 import Toybox.Time;
 import Toybox.WatchUi;
-import Toybox.Lang;
 
-/**
- * Layer to display the date.
- */
-class DateLayer extends Layer {
+class DateLayer {
     private var _dateView as Text;
-    private var _dateString as String?;
+    private var _dateString;
+    private var _color as Number;
 
-    /**
-     * Initializes the date layer.
-     * @param view The text view to display the date
-     */
     function initialize(view as Text) {
-        Layer.initialize();
         _dateView = view;
+        _color = Graphics.COLOR_WHITE;
         update();
     }
 
-    /**
-     * Updates the date string.
-     */
+    function setColor(color as Number) as Void {
+        _color = color;
+    }
+
     function update() as Void {
         var date = Time.Gregorian.info(Time.now(), Time.FORMAT_SHORT);
         var year = date.year % 100;
-        
         _dateString = Lang.format("$1$/$2$/$3$", [
             date.day.format("%02d"),
             date.month.format("%02d"),
@@ -34,15 +28,7 @@ class DateLayer extends Layer {
         ]);
     }
 
-    /**
-     * Draws the date string on the device context.
-     * @param dc The device context
-     */
     function draw(dc as Dc) as Void {
-        if (!_visible || _dateView == null) {
-            return;
-        }
-
         _dateView.setText(_dateString);
         _dateView.setColor(_color);
     }
