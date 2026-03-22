@@ -19,6 +19,9 @@ jobs:
       - name: Ensure output directory exists
         run: mkdir -p bin
 
+      - name: Write developer key
+        run: echo "${{ secrets.DEVELOPER_KEY }}" | base64 -d > developer_key
+
       - name: Build PRG
         run: monkeyc -y developer_key -o bin/Watch.prg -f monkey.jungle -d fr745
 
