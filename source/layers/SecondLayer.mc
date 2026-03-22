@@ -1,6 +1,7 @@
 import Toybox.Graphics;
-import Toybox.System;
 import Toybox.Lang;
+import Toybox.System;
+import Toybox.WatchUi;
 
 /**
  * Layer to display the seconds.
