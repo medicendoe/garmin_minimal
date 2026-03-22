@@ -14,7 +14,7 @@
       "sim": "connectiq",
       "run": "monkeydo bin/Watch.prg fr745",
       "test": "devbox run build && devbox run run",
-      "unit-test": "monkeyc -t -y developer_key -o bin/WatchTest.prg -f monkey.jungle -d fr745 && monkeydo bin/WatchTest.prg fr745 --test"
+      "unit-test": "monkeyc -t -y developer_key -o bin/WatchTest.prg -f test/test.jungle -d fr745 && monkeydo bin/WatchTest.prg fr745 --test"
     }
   }
 }
