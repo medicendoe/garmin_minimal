@@ -11,19 +11,16 @@ class TimeLayer {
     function initialize(view as Text) {
         _timeView = view;
         _color = Graphics.COLOR_WHITE;
-        var ct = System.getClockTime();
-        _timeString = Lang.format("$1$$2$", [ct.hour.format("%02d"), ct.min.format("%02d")]);
+        update();
     }
 
     function setColor(color as Number) as Void {
         _color = color;
     }
 
-    function update(clockTime) as Void {
-        _timeString = Lang.format("$1$$2$", [
-            clockTime.hour.format("%02d"),
-            clockTime.min.format("%02d")
-        ]);
+    function update() as Void {
+        var ct = System.getClockTime();
+        _timeString = Lang.format("$1$$2$", [ct.hour.format("%02d"), ct.min.format("%02d")]);
     }
 
     function draw(dc as Dc) as Void {

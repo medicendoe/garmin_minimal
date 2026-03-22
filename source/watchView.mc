@@ -2,16 +2,7 @@ import Toybox.Application;
 import Toybox.Graphics;
 import Toybox.Lang;
 import Toybox.System;
-import Toybox.Time;
 import Toybox.WatchUi;
-
-/**
- * Returns the display color based on battery level.
- * At or below 15% returns alertColor, otherwise normalColor.
- */
-function batteryColorFor(battery as Float, normalColor as Number, alertColor as Number) as Number {
-    return (battery <= 15) ? alertColor : normalColor;
-}
 
 /**
  * Main watch face view that manages and updates layers.
@@ -48,7 +39,7 @@ class watchView extends WatchUi.WatchFace {
     function onUpdate(dc as Dc) as Void {
         _batteryColor = _computeBatteryColor();
         var color = _batteryColor;
-        var clockTime = System.getClockTime();  // single read for all layers
+        var clockTime = System.getClockTime();
         var bl = _batteryLayer;
         var tl = _timeLayer;
         var sl = _secondLayer;
@@ -56,18 +47,14 @@ class watchView extends WatchUi.WatchFace {
         var dml = _dayMonthLayer;
 
         if (bl != null) { bl.setColor(color); bl.update(); }
-        if (tl != null) { tl.setColor(color); tl.update(clockTime); tl.draw(dc); }
-        if (sl != null) { sl.setColor(color); sl.update(clockTime); sl.draw(dc); }
+        if (tl != null) { tl.setColor(color); tl.update(); tl.draw(dc); }
+        if (sl != null) { sl.setColor(color); sl.update(); sl.draw(dc); }
 
-        // Date and day/month change at most once per day — only update when the hour changes.
-        // Time.now() is read once and shared between both Gregorian.info calls.
+        // Date and day/month change at most once per day — skip update() when hour is unchanged
         if (clockTime.hour != _lastHour) {
             _lastHour = clockTime.hour;
-            var now = Time.now();
-            var shortInfo = Time.Gregorian.info(now, Time.FORMAT_SHORT);
-            var medInfo = Time.Gregorian.info(now, Time.FORMAT_MEDIUM);
-            if (dl != null) { dl.setColor(color); dl.update(shortInfo.day, shortInfo.month, shortInfo.year); dl.draw(dc); }
-            if (dml != null) { dml.setColor(color); dml.update(medInfo.day_of_week, medInfo.month); dml.draw(dc); }
+            if (dl != null) { dl.setColor(color); dl.update(); dl.draw(dc); }
+            if (dml != null) { dml.setColor(color); dml.update(); dml.draw(dc); }
         } else {
             if (dl != null) { dl.setColor(color); dl.draw(dc); }
             if (dml != null) { dml.setColor(color); dml.draw(dc); }
@@ -79,17 +66,17 @@ class watchView extends WatchUi.WatchFace {
 
     function onPartialUpdate(dc as Dc) as Void {
         var color = _batteryColor;
-        var clockTime = System.getClockTime();  // single read for sec check + layer update
+        var clockTime = System.getClockTime();
         var sl = _secondLayer;
         var tl = _timeLayer;
         if (clockTime.sec == 0) {
             // At minute rollover: immediately show "00" and updated minutes, then full redraw
-            if (sl != null) { sl.setColor(color); sl.update(clockTime); sl.drawPartial(dc); }
-            if (tl != null) { tl.setColor(color); tl.update(clockTime); tl.drawPartial(dc); }
+            if (sl != null) { sl.setColor(color); sl.update(); sl.drawPartial(dc); }
+            if (tl != null) { tl.setColor(color); tl.update(); tl.drawPartial(dc); }
             WatchUi.requestUpdate();
             return;
         }
-        if (sl != null) { sl.setColor(color); sl.update(clockTime); sl.drawPartial(dc); }
+        if (sl != null) { sl.setColor(color); sl.update(); sl.drawPartial(dc); }
     }
 
     function onExitSleep() as Void {
@@ -100,8 +87,9 @@ class watchView extends WatchUi.WatchFace {
     }
 
     private function _computeBatteryColor() as Number {
+        var battery = System.getSystemStats().battery;
         var normalColor = Application.Properties.getValue("NormalColor") as Number;
         var alertColor = Application.Properties.getValue("AlertColor") as Number;
-        return batteryColorFor(System.getSystemStats().battery, normalColor, alertColor);
+        return (battery <= 15) ? alertColor : normalColor;
     }
 }
