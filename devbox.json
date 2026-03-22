@@ -1,0 +1,19 @@
+{
+  "$schema":  "https://raw.githubusercontent.com/jetify-com/devbox/0.16.0/.schema/devbox.schema.json",
+  "packages": ["jdk17@latest"],
+  "shell": {
+    "init_hook": [
+      "echo 'Welcome to the Garmin Watch Face Devbox!'",
+      "echo 'Available commands:'",
+      "echo '  devbox run build - Compile the watch face'",
+      "echo '  devbox run sim   - Start the Connect IQ simulator'",
+      "echo '  devbox run run   - Run the compiled watch face in the simulator'"
+    ],
+    "scripts": {
+      "build": "monkeyc -y developer_key -o bin/Watch.prg -f monkey.jungle -d fr745",
+      "sim": "connectiq",
+      "run": "monkeydo bin/Watch.prg fr745",
+      "test": "devbox run build && devbox run run"
+    }
+  }
+}

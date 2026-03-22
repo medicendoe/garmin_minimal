@@ -1,0 +1,16 @@
+# Build artifacts
+/bin/
+
+# Connect IQ compiler intermediates
+*.prg
+*.prg.debug.xml
+*.iq
+
+# Signing key — never commit; each developer uses their own
+developer_key
+
+# Devbox local environment
+/.devbox/
+
+# macOS
+.DS_Store

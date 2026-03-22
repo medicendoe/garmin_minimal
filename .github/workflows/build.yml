@@ -1,0 +1,38 @@
+name: Compile Watch Face
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/matco/connectiq-tester:latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Ensure output directory exists
+        run: mkdir -p bin
+
+      - name: Build PRG
+        run: monkeyc -y developer_key -o bin/Watch.prg -f monkey.jungle -d fr745
+
+      - name: Build IQ
+        run: monkeyc -e -y developer_key -o bin/Watch.iq -f monkey.jungle
+
+      - name: Upload PRG Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: watch-face-prg
+          path: bin/Watch.prg
+
+      - name: Upload IQ Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: watch-face-iq
+          path: bin/Watch.iq
