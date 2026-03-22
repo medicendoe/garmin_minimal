@@ -26,7 +26,7 @@ jobs:
         run: monkeyc -y developer_key -o bin/Watch.prg -f monkey.jungle -d fr745 -O 3
 
       - name: Build IQ
-        run: monkeyc -e -y developer_key -o bin/Watch_pkg -f monkey.jungle && cd bin/Watch_pkg && zip -r ../Watch.iq .
+        run: monkeyc -e -y developer_key -o bin/Watch.iq -f monkey.jungle
 
       - name: Upload PRG Artifact
         uses: actions/upload-artifact@v4
