@@ -1,6 +1,7 @@
 import Toybox.Graphics;
 import Toybox.Lang;
 import Toybox.Time;
+import Toybox.WatchUi;
 
 /**
  * Layer to display the day and month as text.
