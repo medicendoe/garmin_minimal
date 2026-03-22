@@ -1,0 +1,8 @@
+<settings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://developer.garmin.com/downloads/connect-iq/resources.xsd">
+    <setting propertyKey="NormalColor" title="@Strings.NormalColorTitle">
+        <settingConfig type="colorPicker"/>
+    </setting>
+    <setting propertyKey="AlertColor" title="@Strings.AlertColorTitle">
+        <settingConfig type="colorPicker"/>
+    </setting>
+</settings>
