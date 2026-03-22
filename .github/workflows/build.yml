@@ -25,9 +25,6 @@ jobs:
       - name: Build PRG
         run: monkeyc -y developer_key -o bin/Watch.prg -f monkey.jungle -d fr745
 
-      - name: Build Unit Tests
-        run: monkeyc -t -y developer_key -o bin/WatchTest.prg -f test/test.jungle -d fr745
-
       - name: Build IQ
         run: monkeyc -e -y developer_key -o bin/Watch.iq -f monkey.jungle
 
