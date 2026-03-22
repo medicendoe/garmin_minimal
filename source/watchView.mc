@@ -5,6 +5,14 @@ import Toybox.System;
 import Toybox.WatchUi;
 
 /**
+ * Returns the display color based on battery level.
+ * At or below 15% returns alertColor, otherwise normalColor.
+ */
+function batteryColorFor(battery as Float, normalColor as Number, alertColor as Number) as Number {
+    return (battery <= 15) ? alertColor : normalColor;
+}
+
+/**
  * Main watch face view that manages and updates layers.
  */
 class watchView extends WatchUi.WatchFace {
@@ -75,6 +83,6 @@ class watchView extends WatchUi.WatchFace {
     private function _getBatteryColor() as Number {
         var normalColor = Application.Properties.getValue("NormalColor") as Number;
         var alertColor = Application.Properties.getValue("AlertColor") as Number;
-        return (System.getSystemStats().battery <= 15) ? alertColor : normalColor;
+        return batteryColorFor(System.getSystemStats().battery, normalColor, alertColor);
     }
 }
