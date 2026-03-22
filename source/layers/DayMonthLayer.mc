@@ -14,17 +14,18 @@ class DayMonthLayer {
         _dayView = dayView;
         _monthView = monthView;
         _color = Graphics.COLOR_WHITE;
-        update();
+        var info = Time.Gregorian.info(Time.now(), Time.FORMAT_MEDIUM);
+        _dayString = info.day_of_week as String;
+        _monthString = info.month as String;
     }
 
     function setColor(color as Number) as Void {
         _color = color;
     }
 
-    function update() as Void {
-        var dateExtend = Time.Gregorian.info(Time.now(), Time.FORMAT_MEDIUM);
-        _dayString = dateExtend.day_of_week as String;
-        _monthString = dateExtend.month as String;
+    function update(dayOfWeek, month) as Void {
+        _dayString = dayOfWeek;
+        _monthString = month;
     }
 
     function draw(dc as Dc) as Void {

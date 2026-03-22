@@ -13,15 +13,15 @@ class SecondLayer {
         _hasBurnInProtection = System.getDeviceSettings().requiresBurnInProtection;
         _secondView = view;
         _color = Graphics.COLOR_WHITE;
-        update();
+        _secondString = System.getClockTime().sec.format("%02d");
     }
 
     function setColor(color as Number) as Void {
         _color = color;
     }
 
-    function update() as Void {
-        _secondString = System.getClockTime().sec.format("%02d");
+    function update(clockTime) as Void {
+        _secondString = clockTime.sec.format("%02d");
     }
 
     function draw(dc as Dc) as Void {

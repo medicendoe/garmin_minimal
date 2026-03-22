@@ -11,20 +11,23 @@ class DateLayer {
     function initialize(view as Text) {
         _dateView = view;
         _color = Graphics.COLOR_WHITE;
-        update();
+        var date = Time.Gregorian.info(Time.now(), Time.FORMAT_SHORT);
+        _dateString = Lang.format("$1$/$2$/$3$", [
+            date.day.format("%02d"),
+            date.month.format("%02d"),
+            (date.year % 100).format("%02d")
+        ]);
     }
 
     function setColor(color as Number) as Void {
         _color = color;
     }
 
-    function update() as Void {
-        var date = Time.Gregorian.info(Time.now(), Time.FORMAT_SHORT);
-        var year = date.year % 100;
+    function update(day, month, year) as Void {
         _dateString = Lang.format("$1$/$2$/$3$", [
-            date.day.format("%02d"),
-            date.month.format("%02d"),
-            year.format("%02d")
+            day.format("%02d"),
+            month.format("%02d"),
+            (year % 100).format("%02d")
         ]);
     }
 
