@@ -10,4 +10,11 @@
     <string id="ColorPink">Pink</string>
     <string id="ColorOrange">Orange</string>
     <string id="ColorRed">Red</string>
+    <string id="BatteryAlertThresholdTitle">Alert Threshold</string>
+    <string id="Threshold5">5%</string>
+    <string id="Threshold10">10%</string>
+    <string id="Threshold15">15%</string>
+    <string id="Threshold20">20%</string>
+    <string id="Threshold25">25%</string>
+    <string id="Threshold30">30%</string>
 </strings>

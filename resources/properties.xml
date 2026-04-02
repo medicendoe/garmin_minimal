@@ -1,4 +1,5 @@
 <properties xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://developer.garmin.com/downloads/connect-iq/resources.xsd">
     <property id="NormalColor" type="number">16777215</property>
     <property id="AlertColor" type="number">16711680</property>
+    <property id="BatteryAlertThreshold" type="number">15</property>
 </properties>

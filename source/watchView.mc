@@ -90,6 +90,7 @@ class watchView extends WatchUi.WatchFace {
     private function _computeBatteryColor(battery as Float) as Number {
         var normalColor = Application.Properties.getValue("NormalColor") as Number;
         var alertColor = Application.Properties.getValue("AlertColor") as Number;
-        return (battery <= 15) ? alertColor : normalColor;
+        var threshold = Application.Properties.getValue("BatteryAlertThreshold") as Number;
+        return (battery <= threshold) ? alertColor : normalColor;
     }
 }

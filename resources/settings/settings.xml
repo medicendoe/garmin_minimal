@@ -23,4 +23,14 @@
             <listEntry value="16777215">@Strings.ColorWhite</listEntry>
         </settingConfig>
     </setting>
+    <setting propertyKey="BatteryAlertThreshold" title="@Strings.BatteryAlertThresholdTitle">
+        <settingConfig type="list">
+            <listEntry value="5">@Strings.Threshold5</listEntry>
+            <listEntry value="10">@Strings.Threshold10</listEntry>
+            <listEntry value="15">@Strings.Threshold15</listEntry>
+            <listEntry value="20">@Strings.Threshold20</listEntry>
+            <listEntry value="25">@Strings.Threshold25</listEntry>
+            <listEntry value="30">@Strings.Threshold30</listEntry>
+        </settingConfig>
+    </setting>
 </settings>

@@ -11,9 +11,12 @@
     ],
     "scripts": {
       "build": "monkeyc -y developer_key -o bin/Watch.prg -f monkey.jungle -d fr745",
+      "build-fr255": "monkeyc -y developer_key -o bin/Watch-fr255.prg -f monkey.jungle -d fr255",
       "sim": "connectiq",
       "run": "monkeydo bin/Watch.prg fr745",
-      "test": "devbox run build && devbox run run"
+      "run-fr255": "monkeydo bin/Watch-fr255.prg fr255",
+      "test": "devbox run build && devbox run run",
+      "test-fr255": "devbox run build-fr255 && devbox run run-fr255"
     }
   }
 }
